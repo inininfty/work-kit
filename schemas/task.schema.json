@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "task.schema.json",
+  "title": "任务账本单行",
+  "type": "object",
+  "required": ["id", "rev", "title", "status", "requirement_ref", "atomic"],
+  "additionalProperties": true,
+  "properties": {
+    "id": { "type": "string", "pattern": "^T-[0-9]{3,}$" },
+    "rev": { "type": "integer", "minimum": 1 },
+    "title": { "type": "string", "minLength": 4 },
+    "status": {
+      "enum": ["todo", "doing", "blocked", "done", "verified", "abandoned"]
+    },
+    "requirement_ref": { "type": "string", "minLength": 4 },
+    "atomic": { "type": "string", "minLength": 4 },
+    "priority": { "enum": ["P0", "P1", "P2"] },
+    "depends_on": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^T-[0-9]{3,}$" }
+    },
+    "role": { "type": "string" },
+    "evidence": { "type": "array", "items": { "type": "string" } },
+    "completed_by": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^C-[0-9]{3,}$" }
+    },
+    "blocker": { "type": "string" },
+    "next": { "type": ["string", "null"] }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "const": "done" } }, "required": ["status"] },
+      "then": { "required": ["evidence"] }
+    },
+    {
+      "if": { "properties": { "status": { "const": "verified" } }, "required": ["status"] },
+      "then": { "required": ["evidence", "verified_by"] }
+    },
+    {
+      "if": { "properties": { "status": { "const": "blocked" } }, "required": ["status"] },
+      "then": { "required": ["blocker"] }
+    }
+  ]
+}

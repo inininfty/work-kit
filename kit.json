@@ -1,0 +1,51 @@
+{
+  "name": "work-kit",
+  "version": "0.4.4",
+  "description": "可升级、零路径、只装机制的工作壳：账本 + 闸门 + 自配置 + 升级 + 隐私。",
+  "entry": {
+    "init": "bin/init.py",
+    "check": "bin/check.py",
+    "kit": "bin/kit.py",
+    "upgrade": "bin/upgrade.py"
+  },
+  "shell": [
+    "START_HERE.md",
+    "bin/start.py",
+    "VERSION",
+    "kit.json",
+    "AGENTS.md",
+    "README.md",
+    "install.cmd",
+    ".gitignore",
+    "bin/init.py",
+    "bin/check.py",
+    "bin/kit.py",
+    "bin/upgrade.py",
+    "core/__init__.py",
+    "core/attach.py",
+    "core/config.py",
+    "core/ledger.py",
+    "core/trash.py",
+    "core/views.py",
+    "schemas/task.schema.json",
+    "schemas/change.schema.json",
+    "schemas/modification.schema.json",
+    "schemas/config.schema.json",
+    "core/paths.py",
+    "core/policy.py",
+    "core/artifacts.py",
+    "core/experience.py",
+    "tests/test_contract.py",
+    "CONTRACT.md"
+  ],
+  "user_dirs": [
+    "data/",
+    "config/",
+    ".runtime/"
+  ],
+  "ignore": [
+    "__pycache__/",
+    "*.pyc",
+    "*.new"
+  ]
+}

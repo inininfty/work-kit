@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "config.schema.json",
+  "title": "本地配置（含本机路径，永不进版本库、永不进发布包）",
+  "type": "object",
+  "required": ["kit_version", "workspace", "readonly_roots"],
+  "properties": {
+    "kit_version": { "type": "string" },
+    "workspace": { "type": "string", "minLength": 1 },
+    "purpose": { "type": "string" },
+    "readonly_roots": { "type": "array", "items": { "type": "string" } },
+    "privacy_tokens": {
+      "type": "array",
+      "items": { "type": "string" },
+      "comment": "打包前要拦下的敏感词（用户名、公司名等）。留空则只按通用模式扫。"
+    },
+    "created_at": { "type": "string" }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "change.schema.json",
+  "title": "改动清单单行",
+  "type": "object",
+  "required": [
+    "id",
+    "for_task",
+    "requirement_ref",
+    "approved_by",
+    "new_files",
+    "modified_files",
+    "status"
+  ],
+  "properties": {
+    "id": { "type": "string", "pattern": "^C-[0-9]{3,}$" },
+    "for_task": { "type": "string", "pattern": "^T-[0-9]{3,}$" },
+    "requirement_ref": { "type": "string", "minLength": 4 },
+    "approved_by": { "type": "string", "minLength": 1 },
+    "approved_at": { "type": ["string", "null"] },
+    "new_files": { "type": "array", "items": { "type": "string" } },
+    "modified_files": { "type": "array", "items": { "type": "string" } },
+    "do_not_touch": { "type": "array", "items": { "type": "string" } },
+    "outside_change_list": { "type": "array", "items": { "type": "string" } },
+    "line_budget": { "type": "integer", "minimum": 0 },
+    "lines_written": { "type": ["integer", "null"] },
+    "status": { "enum": ["proposed", "doing", "done", "abandoned"] }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "const": "proposed" } }, "required": ["status"] },
+      "then": { "properties": { "approved_at": { "type": "null" } } }
+    },
+    {
+      "if": { "properties": { "status": { "const": "done" } }, "required": ["status"] },
+      "then": {
+        "properties": {
+          "lines_written": { "type": "integer" },
+          "approved_at": { "type": "string" }
+        }
+      }
+    }
+  ]
+}
